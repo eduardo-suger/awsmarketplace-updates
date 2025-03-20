@@ -13,6 +13,13 @@ URLS = {
 SNAPSHOT_DIR = "snapshots"
 os.makedirs(SNAPSHOT_DIR, exist_ok=True)
 
+import os
+
+# Ensure the snapshots folder always exists
+SNAPSHOT_DIR = "snapshots"
+os.makedirs(SNAPSHOT_DIR, exist_ok=True)
+
+
 def fetch_documentation(url):
     """Downloads the page content and returns the processed text."""
     response = requests.get(url)

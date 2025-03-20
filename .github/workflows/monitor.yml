@@ -10,9 +10,11 @@ jobs:
     runs-on: ubuntu-latest  # Use the latest Ubuntu environment
 
     steps:
-    - name: Checkout repository
-      uses: actions/checkout@v3  # Fetch the repository code
-
+    - - name: Checkout repository
+  uses: actions/checkout@v3
+  with:
+    token: ${{ secrets.GH_PAT }}
+    
     - name: Set up Python
       uses: actions/setup-python@v4
       with:

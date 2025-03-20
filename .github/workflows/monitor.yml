@@ -29,18 +29,21 @@ jobs:
       run: python monitor.py  # Execute the monitoring script
 
     - name: Commit and push changes
-      env:
-        GH_TOKEN: ${{ secrets.GH_PAT }}  # Use GitHub Personal Access Token
-      run: |
-        git config --global user.name "GitHub Actions"
-        git config --global user.email "github-actions[bot]@users.noreply.github.com"
+  env:
+    GH_TOKEN: ${{ secrets.GH_PAT }}
+  run: |
+    git config --global user.name "GitHub Actions"
+    git config --global user.email "github-actions[bot]@users.noreply.github.com"
 
-        # Ensure the snapshots/ folder always exists
-        mkdir -p snapshots
-        touch snapshots/.gitkeep
+    # Ensure the snapshots/ folder always exists
+    mkdir -p snapshots
+    touch snapshots/.gitkeep
 
-        git add snapshots/
-        git commit -m "Ensured snapshots/ folder exists and updated documentation snapshots" || echo "No changes to commit"
+    git add snapshots/
+    git commit -m "Ensured snapshots/ folder exists and updated documentation snapshots" || echo "No changes to commit"
 
-        # Use the Personal Access Token to push changes
-        git push https://x-access-token:${GH_TOKEN}@github.com/${{ github.repository }}.git HEAD:main || echo "No changes to push"
+    # Set GitHub authentication
+    git remote set-url origin https://x-access-token:${GH_TOKEN}@github.com/${{ github.repository }}.git
+
+    # Push changes
+    git push origin main || echo "No changes to push"
